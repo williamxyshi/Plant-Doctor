@@ -14,11 +14,11 @@ const User = require("../models/user_model");
 
 const axios = require('axios');
 
+var natural = require('natural');
+var classifier = new natural.LogisticRegressionClassifier();
 
-const keywords = [
-  
+train()
 
-]
 
 
 router.get("/getplant", async (req, res) => {
@@ -77,24 +77,52 @@ router.get("/getplant", async (req, res) => {
       var postCommentsPackage = []
       for(j = 0; j<commentBody.length; j++){
         var comment = commentBody[j].data.body
+
+        // classifier.addDocument(['overwater', 'too much water'], 'overwatered');
+        // classifier.addDocument(['too much light', 'too bright light', 'too bright'], 'too bright light');
+        // classifier.addDocument(['burned', 'too bright light', 'direct light', 'direct sunlight'], 'direct light');
+        
+
+
+        var classes = classifier.getClassifications(comment)
+
+        var commenttags = []
+
+        console.log(' ')
+        console.log(comment)
+        for(k = 0; k<classes.length; k++){
+          console.log(classes[k].label + classes[k].value)
+
+          if(classes[k].value > 0.85){
+            commenttags.push(classes[k].label)
+          }
+
+
+
+        }
+        console.log(' ')
+    
+        
+
+
+
+
         var ups  = commentBody[j].data.ups
         var permalink = commentBody[j].data.permalink
-        console.log(comment);
+       
         postCommentsPackage.push({
           'comment' : comment,
           'upvotes': ups,
+          'tags' : commenttags,
           'link': permalink })
       }
       commentsUnParsed.push({
         'imageurl' : imageurl,
-        'comments' : postCommentsPackage
+        'comments' : postCommentsPackage,
       })
 
 
     }
-
-
-
 
 
 
@@ -122,6 +150,49 @@ router.get("/planttest", async (req, res) => {
       res.send({ message: "Error in Fetching user" });
     }
   });
+
+  function train(){
+
+    classifier.addDocument('overwater', 'overwatered');
+    classifier.addDocument('too much water', 'overwatered');
+    classifier.addDocument('less water', 'overwatered');
+
+    classifier.addDocument('too dry', 'more water');
+    classifier.addDocument('more water', 'more water');
+    classifier.addDocument('underwater', 'more water');
+
+
+    classifier.addDocument('need nutrients', 'fertilize');
+    classifier.addDocument('more nutrients', 'fertilize');
+
+    classifier.addDocument('inconsistent watering', 'inconsistent watering');
+
+    classifier.addDocument('drainage', 'soil too wet');
+    classifier.addDocument('root rot', 'soil too wet');
+    classifier.addDocument('soil too wet', 'soil too wet');
+
+    classifier.addDocument('sunburn', 'less direct sunlight');
+
+    classifier.addDocument('excess of sunlight', 'less bright light');
+
+    classifier.addDocument('not enough light', 'brighter light');
+
+    classifier.addDocument('fungus', 'fungus');
+
+    classifier.addDocument('more humidity', 'more humidity');
+
+    classifier.addDocument('less humidity', 'less humidity');
+
+    classifier.addDocument('bind', 'repot');
+    classifier.addDocument('repot', 'repot');
+
+    classifier.addDocument('bug', 'pests');
+    classifier.addDocument('insect', 'pests');
+
+    classifier.addDocument('looks fine', 'normal');
+
+    classifier.train()
+  }
 
 module.exports = router;
  
