@@ -3,7 +3,51 @@ import React, { Component } from 'react';
 import Bar from "./bar.component";
 import PlantBar from "./plant-bar.component";
 
+import ResultChart from "./piechart.component";
+
 import axios from 'axios';
+
+import posed from 'react-pose';
+
+let styles = {
+        
+    center : {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: 30
+
+    },
+  }
+
+function UserGreeting(props) {
+    return <ResultChart serverResponse = {props.serverResponse} />;
+  }
+  
+  function GuestGreeting(props) {
+    return <h1></h1>;
+  }
+  
+  function Greeting(props) {
+    const showResults = props.showResults;
+    if (showResults) {
+      return <UserGreeting serverResponse = {props.serverResponse}/>;
+    }
+    return <GuestGreeting />;
+  }
+
+const Box = posed.div({
+    searching: { 
+        marginTop: 250,
+
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', },
+    results: { 
+        marginTop: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', }
+  });
 
 export default class SearchBar extends Component {
 
@@ -15,8 +59,8 @@ export default class SearchBar extends Component {
 
             searchBarText: '',
             plantBarText: '',
-
-            serverResponse: ' '
+            serverResponse: ' ',
+            searchingState: true
 
         }
 
@@ -36,6 +80,8 @@ export default class SearchBar extends Component {
         var problem = this.state.searchBarText;
         var plant = this.state.plantBarText;
 
+     
+
    
      
         axios.get('http://localhost:4000/plant/getplant', {
@@ -46,14 +92,26 @@ export default class SearchBar extends Component {
             }
         })
             .then(res => {
-            
+         
                 this.state.serverResponse = res.data
 
+            
+          
                 console.log(this.state.serverResponse)
+            
+
+
+                this.setState({ searchingState: false });
+
+
             
             }
                 );
 
+    }
+
+    getServerResponse(){
+        return this.state.serverResponse
     }
 
     onChangeBar(e) {
@@ -74,41 +132,58 @@ export default class SearchBar extends Component {
     }
 
 
-
     render() {
+
+
+
         let styles = {
         
-            row : {
+            rowSearching : {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginTop: 200
     
-            }
+            },
+            rowSearched : {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 50
+    
+            },
           }
      
         return (
-            <div style={styles.row}>
-
-                <PlantBar
-                    filterText={this.state.plantBarText}
-                   
-                    onChangePlantBar = {this.onChangePlantBar}
+            <div>
+                <Box pose = {this.state.searchingState? 'searching' : 'results'}>
+                    <PlantBar
+                        filterText={this.state.plantBarText}
                     
-                />
+                        onChangePlantBar = {this.onChangePlantBar}
+                        
+                    />
 
-                <Bar
-                    filterText={this.state.searchBarText}
-                    onChangeBar = {this.onChangeBar}
+                    <Bar
+                        filterText={this.state.searchBarText}
+                        onChangeBar = {this.onChangeBar}
 
-                />
+                    />
 
-                <form onSubmit={this.onSubmit}>
-                    <button type="submit" className="btn btn-success">search</button>
-                </form>
+                    <form onSubmit={this.onSubmit}>
+                        <button type="submit" className="btn btn-success">search</button>
+                    </form>
 
+
+                </Box>
+
+                <Greeting showResults={!this.state.searchingState}  serverResponse = {this.state.serverResponse}
+                styles = {styles.center}/>
 
             </div>
+
+
+            
         )
     }
 }

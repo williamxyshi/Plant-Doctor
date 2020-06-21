@@ -101,6 +101,13 @@ router.get("/getplant", async (req, res) => {
 
         }
         console.log(' ')
+
+        /**
+         * should we include comments that return nothing from the parser??
+         */
+        // if(commenttags.length == 0){
+        //   commenttags.push("cannot tell")
+        // }
     
         
 
@@ -184,6 +191,8 @@ router.get("/planttest", async (req, res) => {
     classifier.addDocument('less humidity', 'less humidity');
 
     classifier.addDocument('bind', 'repot');
+    classifier.addDocument('root bound', 'repot');
+    classifier.addDocument('constricted', 'repot');
     classifier.addDocument('repot', 'repot');
 
     classifier.addDocument('bug', 'pests');
