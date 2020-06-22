@@ -10,6 +10,34 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
         { title: 'Three', value: 20, color: '#6A2135' },
     ];
 
+    var colors = {
+         "overwatered": "#774936" ,
+         "more water": "#8A5A44",
+         "fertilize": "#9D6B53",
+         "inconsistent watering": "#B07D62",
+         "soil too wet": "#C38E70",
+         "less direct sunlight": "#CD9777",
+         "less bright sunlight": "#D69F7E",
+         "brighter light": "#DEAB90",
+         "fungus": "#E6B8A2",
+
+         "more humidity": "#EDC4B3",
+
+         "less humidity": "#306B34",
+
+         "repot": "#86A397",
+         "pests": "#1D3354",
+
+         "normal": "#F94144"
+
+
+      
+
+
+
+
+    }
+
     
 
 
@@ -34,7 +62,7 @@ export default class ResultChart extends Component {
             pieChartData.push({
                 title: String(key),
                 value: (value/totalTags)*100,
-                color: '#E38627'
+                color: colors[key]
 
             })
 
@@ -96,15 +124,16 @@ export default class ResultChart extends Component {
         let styles = {
     
             bar: {
-                display: 'flex',
                 width: 800,
-                height: 500,
-                alignItems: 'center',
-                justifyContent: 'center',
+                height: 450,
                 elevation: 5,
                 
-                marginTop: 30,
-                marginLeft: 150
+                bottom: 0,
+                top: 0,
+                position: "absolute",
+                right: 0,
+                left: 0,
+                margin: "auto",
             
     
                 
@@ -120,7 +149,8 @@ export default class ResultChart extends Component {
                 label={({ dataEntry }) => dataEntry.title}
                 labelStyle={(index) => ({
                     fill: pieChartData[index].color,
-                    fontSize: '3px',
+                    fontSize: '5px',
+                    fontStyle: "bold",
                     fontFamily: 'sans-serif',
                 })}
                 radius={42}

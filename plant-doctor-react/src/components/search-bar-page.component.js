@@ -9,31 +9,87 @@ import axios from 'axios';
 
 import posed from 'react-pose';
 
-let styles = {
-        
-    center : {
+let lateStyles = {
+    left : {
+        height : '100%',
+        width : "20%",
         display: 'flex',
-        justifyContent: 'center',
-        marginTop: 30
+        left: 0,
+        top: 0,
+        position: 'absolute',
+        background: "#354F52"
+
 
     },
-  }
 
-function UserGreeting(props) {
-    return <ResultChart serverResponse = {props.serverResponse} />;
-  }
+
+
+
+    right : {
+        height : '100%',
+        width : "20%",
+        display: 'flex',
+        right: 0,
+        top: 0,
+        position: 'absolute',
+        background: "#354F52"
+
+    },
+}
+
+    function ShowPieChart(props) {
+        return <ResultChart serverResponse = {props.serverResponse}  />;
+    }
   
-  function GuestGreeting(props) {
-    return <h1></h1>;
-  }
+    function Blank(props) {
+        return <h1></h1>;
+    }
   
-  function Greeting(props) {
+  function ShowChart(props) {
     const showResults = props.showResults;
     if (showResults) {
-      return <UserGreeting serverResponse = {props.serverResponse}/>;
+      return <ShowPieChart serverResponse = {props.serverResponse} />;
     }
-    return <GuestGreeting />;
+    return <Blank />;
   }
+
+  const LeftBox = posed.div({
+    searching: { 
+        height : '0%',
+        width : "20%",
+        display: 'flex',
+        left: 0,
+        bottom: 0,
+        position: 'absolute',
+        background: "#354F52" },
+    results: { 
+        height : '100%',
+        width : "20%",
+        display: 'flex',
+        left: 0,
+        bottom: 0,
+        position: 'absolute',
+        background: "#354F52" }
+  });
+  const RightBox = posed.div({
+    searching: { 
+        height : '0%',
+        width : "20%",
+        display: 'flex',
+        right: 0,
+        bottom: 0,
+        position: 'absolute',
+        background: "#354F52" },
+    results: { 
+        height : '100%',
+        width : "20%",
+        display: 'flex',
+        right: 0,
+        bottom: 0,
+        position: 'absolute',
+        background: "#354F52" }
+  });
+
 
 const Box = posed.div({
     searching: { 
@@ -152,6 +208,35 @@ export default class SearchBar extends Component {
                 marginTop: 50
     
             },
+            center:{
+                marginTop: 50
+            },
+        
+            left : {
+                height : '100%',
+                width : "20%",
+                display: 'flex',
+                left: 0,
+                top: 0,
+                position: 'absolute',
+                background: "#354F52"
+        
+            
+        
+            },
+
+            right : {
+                height : '100%',
+                width : "20%",
+                display: 'flex',
+                right: 0,
+                top: 0,
+                position: 'absolute',
+                background: "#354F52"
+        
+            
+        
+            },
           }
      
         return (
@@ -177,8 +262,20 @@ export default class SearchBar extends Component {
 
                 </Box>
 
-                <Greeting showResults={!this.state.searchingState}  serverResponse = {this.state.serverResponse}
-                styles = {styles.center}/>
+                <ShowChart showResults={!this.state.searchingState}  serverResponse = {this.state.serverResponse}
+                style = {styles.center}/>
+
+                <LeftBox pose = {this.state.searchingState? 'searching' : 'results'}>
+
+
+
+                </LeftBox>
+
+                <RightBox pose = {this.state.searchingState? 'searching' : 'results'}>
+
+
+
+                </RightBox>
 
             </div>
 
