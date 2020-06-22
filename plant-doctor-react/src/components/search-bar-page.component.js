@@ -53,6 +53,14 @@ let lateStyles = {
     return <Blank />;
   }
 
+    function ShowLeft(props) {
+        const showResults = props.showResults;
+        if (showResults) {
+        return <ShowPieChart serverResponse = {props.serverResponse} />;
+        }
+        return <Blank />;
+    }
+
   const LeftBox = posed.div({
     searching: { 
         height : '0%',
@@ -266,7 +274,7 @@ export default class SearchBar extends Component {
                 style = {styles.center}/>
 
                 <LeftBox pose = {this.state.searchingState? 'searching' : 'results'}>
-
+                    <ShowLeft showResults={!this.state.searchingState}  serverResponse = {this.state.serverResponse}/>
 
 
                 </LeftBox>
