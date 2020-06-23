@@ -1,10 +1,11 @@
-Plant Doctor TODO:
+plant doctor todo:
 
-Finish SERVER
+fix: 
+side bar empty text,
+scrollbar styling,
+github logo,
+make nlp better?,
+favicon,
+links to post,
 
-
-
-Finish Website
-
-
-Finish APP
+deploy

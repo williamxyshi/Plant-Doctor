@@ -180,7 +180,7 @@ router.get("/planttest", async (req, res) => {
     classifier.addDocument('root rot', 'soil too wet');
     classifier.addDocument('soil too wet', 'soil too wet');
 
-    classifier.addDocument('sunburn', 'less direct sunlight');
+    classifier.addDocument('sunburn', 'less direct light');
     classifier.addDocument('direct sun burn', 'less direct light');
 
     classifier.addDocument('excess of sunlight', 'less bright light');

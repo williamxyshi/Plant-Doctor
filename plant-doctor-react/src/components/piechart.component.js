@@ -22,7 +22,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
          "soil too wet": "#000133",
 
-         "less direct sunlight": "#89CFF0",
+         "less direct light": "#89CFF0",
 
          "less bright light": "#2e5090",
 
