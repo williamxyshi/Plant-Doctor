@@ -55,6 +55,14 @@ class App extends Component {
         bottom: 0,
         left: 0
 
+      },
+
+      github: {
+        height: "50%",
+        width: "auto",
+        position: "absolute",
+        right: 0,
+        marginRight: 50,
       }
 
 
@@ -66,6 +74,10 @@ class App extends Component {
         <div style={styles.navBarContainer}>
         <h1 style = {styles.headerText}>Plant Doctor</h1>
 
+        <a href="https://github.com/williamxyshi/Plant-Doctor" style = {styles.github}>
+         <img alt="Qries" src="https://image.flaticon.com/icons/svg/25/25231.svg" style = {styles.github}/>
+     
+         </a>
 
 
         </div>

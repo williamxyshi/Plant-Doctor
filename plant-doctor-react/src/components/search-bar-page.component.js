@@ -45,6 +45,11 @@ let lateStyles = {
     overflow: {
         overflow: 'scroll'
     },
+
+    details:{
+        position: "absolute",
+        right: 0,
+    }
 }
 
     function ShowPieChart(props) {
@@ -78,6 +83,15 @@ let lateStyles = {
         }
         return <Blank />;
     }
+
+    function ShowDetailsText(props) {
+        const showResults = props.showResults;
+        if (showResults) {
+        return <h3>Details</h3>
+        }
+        return <Blank />;
+    }
+
 
   const LeftBox = posed.div({
     searching: { 
@@ -344,7 +358,7 @@ export default class SearchBar extends Component {
             spinner: {
                 height: 150,
                 width: 150,
-            }
+            },
           }
      
         return (
@@ -388,6 +402,7 @@ export default class SearchBar extends Component {
 
                 </LeftBox>
 
+                
                 <RightBox pose = {this.state.searchingState? 'searching' : 'results'}>
                     <ShowRight showResults={!this.state.searchingState}  serverResponse = {this.state.serverResponse} clickedTag = {this.state.clickedTag}/>
 

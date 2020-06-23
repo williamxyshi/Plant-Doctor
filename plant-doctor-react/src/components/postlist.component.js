@@ -32,7 +32,6 @@ export default class PostList extends Component {
 
 
         for(var i = 0; i < response.length; i++){
-            console.log(response[i])
             
             for(var j=0; j<response[i].comments.length; j++){
 
@@ -40,7 +39,8 @@ export default class PostList extends Component {
                 if(comment.tags.includes(this.props.clickedTag)){
                     list.push(
                         {
-                            "comment": comment.comment
+                            "comment": comment.comment,
+                            "link": "http://reddit.com" + comment.link
                         }
                     )
                 }
@@ -49,6 +49,17 @@ export default class PostList extends Component {
 
             }
 
+
+        }
+
+
+        if(list.length == 0){
+
+            list.push(
+                {
+                    "comment": "Click on a slice to view more details"
+                }
+            )
 
         }
 
@@ -88,11 +99,13 @@ export default class PostList extends Component {
         }
 
         return (
-            <ul>
+        <ul>
             {list.map(item => (
-              <div style = {styles.image}>{item.comment}</div>
+                <a href={item.link}>
+                    <div style = {styles.image}>{item.comment}</div>
+                </a>
             ))}
-          </ul>
+        </ul>
         )
     }
 }
