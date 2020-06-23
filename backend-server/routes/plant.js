@@ -29,9 +29,9 @@ router.get("/getplant", async (req, res) => {
 
 
 
+    console.log(plantName + plantProblem)
 
-
-    const response = await axios.get('http://www.reddit.com/r/plantclinic/search.json?restrict_sr=on&q=' + plantName + " " + plantProblem)
+    const response = await axios.get('http://www.reddit.com/r/plantclinic/search.json?restrict_sr=on&t=all&sort=relevance&q=' + plantName + " " + plantProblem)
     
     var children = response.data.data.children
 
@@ -46,9 +46,11 @@ router.get("/getplant", async (req, res) => {
      */
     var commentsUnParsed = []
 
-  
+
 
     for(i = 0; i < max; i++){
+
+      
 
       var name = children[i].data.name;
       var imageurl = children[i].data.url
@@ -88,19 +90,18 @@ router.get("/getplant", async (req, res) => {
 
         var commenttags = []
 
-        console.log(' ')
-        console.log(comment)
+        // console.log(' ')
+        // console.log(comment)
         for(k = 0; k<classes.length; k++){
-          console.log(classes[k].label + classes[k].value)
+          // console.log(classes[k].label + classes[k].value)
 
-          if(classes[k].value > 0.85){
+          if(classes[k].value > 0.90){
             commenttags.push(classes[k].label)
           }
 
 
 
         }
-        console.log(' ')
 
         /**
          * should we include comments that return nothing from the parser??
@@ -175,30 +176,36 @@ router.get("/planttest", async (req, res) => {
     classifier.addDocument('inconsistent watering', 'inconsistent watering');
 
     classifier.addDocument('drainage', 'soil too wet');
+    classifier.addDocument('let soil dry', 'soil too wet');
     classifier.addDocument('root rot', 'soil too wet');
     classifier.addDocument('soil too wet', 'soil too wet');
 
     classifier.addDocument('sunburn', 'less direct sunlight');
+    classifier.addDocument('direct sun burn', 'less direct light');
 
     classifier.addDocument('excess of sunlight', 'less bright light');
+    classifier.addDocument('too bright', 'less bright light');
+    classifier.addDocument('too much light', 'less bright light');
 
     classifier.addDocument('not enough light', 'brighter light');
 
     classifier.addDocument('fungus', 'fungus');
 
-    classifier.addDocument('more humidity', 'more humidity');
-
-    classifier.addDocument('less humidity', 'less humidity');
+    classifier.addDocument('humidity', 'humidity');
 
     classifier.addDocument('bind', 'repot');
+    classifier.addDocument('new pot', 'repot');
     classifier.addDocument('root bound', 'repot');
     classifier.addDocument('constricted', 'repot');
     classifier.addDocument('repot', 'repot');
 
     classifier.addDocument('bug', 'pests');
     classifier.addDocument('insect', 'pests');
+    classifier.addDocument('pest', 'pests');
+    classifier.addDocument('infest', 'pests');
 
-    classifier.addDocument('looks fine', 'normal');
+
+    classifier.addDocument("normal", 'normal');
 
     classifier.train()
   }

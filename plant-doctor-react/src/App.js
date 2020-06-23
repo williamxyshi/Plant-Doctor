@@ -41,7 +41,9 @@ class App extends Component {
       
         position: "absolute",
         bottom: 0,
-        left: 0
+        left: 0,
+
+        overflow: "hidden"
       },
 
 

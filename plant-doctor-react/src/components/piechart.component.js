@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState,Component } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
+
 var CanvasJSReact = require('./canvasjs.react');
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -11,24 +12,31 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     ];
 
     var colors = {
-         "overwatered": "#774936" ,
-         "more water": "#8A5A44",
-         "fertilize": "#9D6B53",
-         "inconsistent watering": "#B07D62",
-         "soil too wet": "#C38E70",
-         "less direct sunlight": "#CD9777",
-         "less bright sunlight": "#D69F7E",
-         "brighter light": "#DEAB90",
-         "fungus": "#E6B8A2",
+         "overwatered": "#00009c" ,
 
-         "more humidity": "#EDC4B3",
+         "more water": "#0000AA",
 
-         "less humidity": "#306B34",
+         "fertilize": "#000080",
 
-         "repot": "#86A397",
-         "pests": "#1D3354",
+         "inconsistent watering": "#0047ab",
 
-         "normal": "#F94144"
+         "soil too wet": "#000133",
+
+         "less direct sunlight": "#89CFF0",
+
+         "less bright light": "#2e5090",
+
+         "brighter light": "#003366",
+
+         "fungus": "#0073cf",
+
+         "humidity": "#2a52be",
+
+         "repot": "#00008b",
+
+         "pests": "#0054b4",
+
+         "normal": "#1034a6"
 
 
       
@@ -45,6 +53,8 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     var tagMap = new Map();
 
 export default class ResultChart extends Component {
+
+
     constructor(props) {
         super(props);
 
@@ -146,6 +156,7 @@ export default class ResultChart extends Component {
                 <div style= {styles.bar}>
             <PieChart data={pieChartData} lengthAngle={360} animate 
             animationDuration = {1000}
+
                 label={({ dataEntry }) => dataEntry.title}
                 labelStyle={(index) => ({
                     fill: pieChartData[index].color,
@@ -156,7 +167,17 @@ export default class ResultChart extends Component {
                 radius={42}
                 labelPosition={112}
 
-    
+                segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
+
+                onClick={(event, index) => {
+                    // action('CLICK')(event, index);
+                    console.log('CLICK', { event, index });
+                    this.props.changeIndex(pieChartData[index].title)
+                  
+                    // setSelected(index === selected ? undefined : index);
+                  }}
+
+            
                 />
                 </div>
             
