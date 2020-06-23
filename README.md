@@ -19,7 +19,7 @@ API's used:  Trefle plants api + reddit api
 
 ### Future Features
 
-- Some minor bugs
+- Some minor bugs (safari layout)
 - Flutter mobile client
 - improve backend nlp processing
 
