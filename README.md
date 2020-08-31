@@ -2,6 +2,13 @@
 
 https://plantdoctor.info
 
+### Features
+
+  - Search by plant name and plant issue
+  - View a compiled pie graph of likely causes
+  - View images of other people's plants matching search query
+  - View compiled list of comments of possible treatments  
+
 
 ### Built With
 
